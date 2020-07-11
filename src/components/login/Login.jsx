@@ -10,6 +10,7 @@ const useStyles = makeStyles((theme) => ({
     flexDirection: "column",
     justifyContent: "center",
     alignItems: "center",
+    height: "100vh",
   },
   button: {
     background: "linear-gradient(45deg, #FE6B8B 30%, #FF8E53 90%)",
@@ -34,15 +35,17 @@ const useStyles = makeStyles((theme) => ({
   form: {
     display: "flex",
     flexDirection: "column",
-    justifyContent: "center",
+    justifyContent: "space-evenly",
     alignItems: "center",
   },
   input: {
-    width: "100%",
+    width: "80vw",
+    margin: 10,
   },
 }));
 
-export default function Login() {
+export default function Login(props) {
+  const [isLoggedIn, setIsLoggedIn] = props.isLoggedIn;
   const classes = useStyles();
   const [
     isFetchingLoginInformation,
@@ -53,6 +56,7 @@ export default function Login() {
     setIsFetchingLoginInformation(true);
     setTimeout(() => {
       setIsFetchingLoginInformation(false);
+      setIsLoggedIn(true);
     }, 2000);
   };
 
@@ -63,11 +67,6 @@ export default function Login() {
   return (
     <div className={classes.root}>
       <Typography variant="h4">Login</Typography>
-      <Typography>Login como doador</Typography>
-
-      <Button className={classes.button} onClick={handleLogin}>
-        Hook
-      </Button>
       <form
         className={classes.form}
         noValidate
@@ -77,16 +76,19 @@ export default function Login() {
         <TextField
           className={classes.input}
           id="outlined-basic"
-          label="Outlined"
+          label="Username"
           variant="outlined"
         />
         <TextField
           className={classes.input}
           id="outlined-basic"
-          label="Outlined"
+          label="Password"
           variant="outlined"
         />
-        <Button type="submit">Log In</Button>
+        <Button type="submit" onClick={handleLogin} className={classes.button}>
+          Log In
+        </Button>
+        <Typography>Sem uma conta? Cadastre-se</Typography>
       </form>
       {isFetchingLoginInformation ? (
         <div className={classes.fetchingBackground}>
